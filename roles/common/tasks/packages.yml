@@ -1,0 +1,5 @@
+- name: Updating system packages
+  apt:
+    name: "*"
+    state: latest
+    update_cache: yes

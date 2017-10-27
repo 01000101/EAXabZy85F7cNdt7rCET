@@ -1,6 +1,1 @@
-gather_facts: false
-pre_tasks:
-  - raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
-  - setup: # aka gather_facts
-
 - include_tasks: packages.yml

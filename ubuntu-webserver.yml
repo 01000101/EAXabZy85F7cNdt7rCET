@@ -2,7 +2,7 @@
   - all
   gather_facts: false
   pre_tasks:
-  - raw: test -e /usr/bin/python || (sudo apt -y update && sudo apt install -y python python-pip virtualenv)
+  - raw: test -e /usr/bin/python || (sudo apt -y update && sudo apt install -y python python-pip virtualenv aptitude)
   - setup: # aka gather_facts
   become: true
   roles:

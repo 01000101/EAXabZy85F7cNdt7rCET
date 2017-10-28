@@ -4,6 +4,10 @@
   pre_tasks:
   - raw: sudo apt -y update && sudo apt install -y python python-pip virtualenv aptitude
   - setup: # aka gather_facts
+  - name: Waiting for SSH to be available
+    wait_for_connection:
+      delay: 15
+      timeout: 300
   become: true
   roles:
   - common

@@ -12,7 +12,7 @@
 - name: Running OpenSCAP scan
   shell: |
     oscap xccdf eval \
-      --report="{{ openscap_remote_scan_path }}" \
+      --report="{{ openscap_remote_scan_path.path }}" \
       --fetch-remote-resources \
       --xccdf-id="{{ openscap_xccdf_id }}" \
       --profile="{{ openscap_profile }}"  \
@@ -21,7 +21,7 @@
 
 - name: Downloading OpenSCAP scan report
   fetch:
-    src: "{{ openscap_remote_scan_path }}"
+    src: "{{ openscap_remote_scan_path.path }}"
     dest: "/tmp/openscap-{{ inventory_hostname }}.html"
     flat: yes
 

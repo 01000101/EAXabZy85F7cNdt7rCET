@@ -11,16 +11,21 @@
 
 - name: Installing OpenSCAP packages
   package:
-    # name: libopenscap8
-    name: openscap
+    name: libopenscap8
+    #name: openscap
     state: latest
   when: ansible_os_family == 'Debian'
 
-- name: Installing OpenSCAP Security Guide
+#- name: Installing OpenSCAP Security Guide
+#  package:
+#    name: scap-security-guide
+#    state: latest
+#  when: ansible_os_family == 'RedHat'
+
+- name: Installing unzip
   package:
-    name: scap-security-guide
+    name: unzip
     state: latest
-  when: ansible_os_family == 'RedHat'
 
 #- name: Install Python PIP
 #  shell: curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | sudo python

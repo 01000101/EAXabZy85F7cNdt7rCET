@@ -1,9 +1,21 @@
+- name: Creating temporary file placeholder for scan guide
+  tempfile:
+    state: directory
+    prefix: 'openscapguide'
+  register: openscap_guide
+
 - name: Creating temporary file placeholder for scan results
   tempfile:
     state: file
     prefix: 'openscap'
     suffix: '.html'
-  register: openscap_remote_scan_path
+  register: openscap_results
+
+- name: Fetching OpenSCAP security guide archive
+  unarchive:
+    src: "https://github.com/OpenSCAP/scap-security-guide/releases/download/v0.1.36/scap-security-guide-0.1.36-oval-5.10.zip"
+    dest: "{{ openscap_guide.path }}"
+    remote_src: yes
 
 # Sample CentOS 7 PCI-DSS scan
 # openscap_xccdf_id: scap_org.open-scap_cref_ssg-rhel7-xccdf-1.2.xml
@@ -12,16 +24,16 @@
 - name: Running OpenSCAP scan
   shell: |
     oscap xccdf eval \
-      --report="{{ openscap_remote_scan_path.path }}" \
+      --report="{{ openscap_results.path }}" \
       --fetch-remote-resources \
       --xccdf-id="{{ openscap_xccdf_id }}" \
       --profile="{{ openscap_profile }}"  \
-      {{ openscap_ds_path }}
+      {{ openscap_guide.path }}/scap-security-guide-0.1.36-oval-5.10/{{ openscap_ds_path }}
   ignore_errors: yes
 
 - name: Downloading OpenSCAP scan report
   fetch:
-    src: "{{ openscap_remote_scan_path.path }}"
+    src: "{{ openscap_results.path }}"
     dest: "/tmp/openscap-{{ inventory_hostname }}.html"
     flat: yes
 

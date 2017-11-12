@@ -27,6 +27,8 @@
 
 - name: Uploading OpenSCAP scan to AWS S3
   aws_s3:
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
     bucket: beltrix
     object: "/zt-scans/openscap-{{ inventory_hostname }}.html"
     src: "/tmp/openscap-{{ inventory_hostname }}.html"

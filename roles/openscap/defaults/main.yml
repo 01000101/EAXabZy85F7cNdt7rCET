@@ -1,3 +1,6 @@
 openscap_xccdf_id: changeme
 openscap_profile: changeme
 openscap_ds_path: changeme
+
+cloudforms_api_username: changeme
+cloudforms_api_password: changeme

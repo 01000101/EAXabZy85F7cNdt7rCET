@@ -37,7 +37,7 @@
     url: "{{ cloudforms.href }}/custom_attributes"
     validate_certs: no
     method: POST
-    user: {{ cloudforms_api_username }}
+    user: "{{ cloudforms_api_username }}"
     password: "{{ cloudforms_api_password }}"
     body:
       action: add

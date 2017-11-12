@@ -57,3 +57,22 @@
     body_format: json
   delegate_to: localhost
 
+- name: Update ManageIQ instance with OpenSCAP scan result timestamp
+  uri:
+    url: "{{ cloudforms.href }}/custom_attributes"
+    validate_certs: no
+    method: POST
+    user: "{{ cloudforms_api_username }}"
+    password: "{{ cloudforms_api_password }}"
+    body:
+      action: add
+      resources:
+      - name: OpenSCAP Report Timestamp
+        value: "{{ ansible_date_time.iso8601 }}"
+        source: EVM
+        section: Compliance
+    force_basic_auth: yes
+    status_code: 200
+    body_format: json
+  delegate_to: localhost
+

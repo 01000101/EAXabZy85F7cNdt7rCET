@@ -33,6 +33,8 @@
     object: "zt-scans/openscap-{{ inventory_hostname }}.html"
     src: "/tmp/openscap-{{ inventory_hostname }}.html"
     mode: put
+    permission:
+    - public-read
   delegate_to: localhost
   register: openscap_s3_path
 

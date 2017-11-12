@@ -1,2 +1,23 @@
-- name: Dumping variables
-  action: template src=debugger.j2 dest=/tmp/ansible-vars
+- name: 'Debug :: vars'
+  debug:
+    var: vars
+
+- name: 'Debug :: environment'
+  debug:
+    var: environment
+
+- name: 'Debug :: group_names'
+  debug:
+    var: group_names
+
+- name: 'Debug :: groups'
+  debug:
+    var: groups
+
+- name: 'Debug :: hostvars'
+  debug:
+    var: hostvars
+
+- name: 'Debug :: hostvars[inventory_hostname]'
+  debug:
+    var: hostvars[inventory_hostname]

@@ -30,10 +30,11 @@
     aws_access_key: "{{ aws_access_key }}"
     aws_secret_key: "{{ aws_secret_key }}"
     bucket: beltrix
-    object: "/zt-scans/openscap-{{ inventory_hostname }}.html"
+    object: "zt-scans/openscap-{{ inventory_hostname }}.html"
     src: "/tmp/openscap-{{ inventory_hostname }}.html"
     mode: put
   delegate_to: localhost
+  register: openscap_s3_path
 
 - name: Update ManageIQ instance with OpenSCAP scan result URL
   uri:
@@ -46,7 +47,7 @@
       action: add
       resources:
       - name: OpenSCAP Report
-        value: "https://s3.amazonaws.com/beltrix/zt-scans/openscap-{{ inventory_hostname }}.html"
+        value: "{{ openscap_s3_path.url }}"
         source: EVM
         section: Compliance
     force_basic_auth: yes

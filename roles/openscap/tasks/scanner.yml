@@ -35,6 +35,7 @@
 - name: Update ManageIQ instance with OpenSCAP scan result URL
   uri:
     url: "{{ cloudforms.href }}/custom_attributes"
+    validate_certs: no
     method: POST
     user: {{ cloudforms_api_username }}
     password: "{{ cloudforms_api_password }}"

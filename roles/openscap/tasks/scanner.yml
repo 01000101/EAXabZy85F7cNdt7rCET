@@ -21,12 +21,31 @@
 
 - name: Downloading OpenSCAP scan report
   fetch:
-    src: {{ openscap_remote_scan_path }}
-    dest: /tmp/openscap-{{ inventory_hostname }}.html
+    src: "{{ openscap_remote_scan_path }}"
+    dest: "/tmp/openscap-{{ inventory_hostname }}.html"
     flat: yes
 
-#- name: copy the paired files to the right servers
-#  hosts: dest-servers
-#  copy:
-#    src: "/tmp/{{ source-server }}/path/to/file"
-#    dest: /path/to/dest
+- name: Uploading OpenSCAP scan to AWS S3
+  aws_s3:
+    bucket: beltrix
+    object: "/zt-scans/openscap-{{ inventory_hostname }}.html"
+    src: "/tmp/openscap-{{ inventory_hostname }}.html"
+    mode: put
+
+- name: Update ManageIQ instance with OpenSCAP scan result URL
+  uri:
+    url: "{{ cloudforms.href }}/custom_attributes"
+    method: POST
+    user: {{ cloudforms_api_username }}
+    password: "{{ cloudforms_api_password }}"
+    body:
+      action: add
+      resources:
+      - name: OpenSCAP Report
+        value: "https://s3.amazonaws.com/beltrix/zt-scans/openscap-{{ inventory_hostname }}.html"
+        source: EVM
+        section: Compliance
+    force_basic_auth: yes
+    status_code: 200
+    body_format: json
+

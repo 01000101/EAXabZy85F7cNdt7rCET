@@ -2,6 +2,10 @@
   debug:
     var: vars
 
+- name: 'Debug :: cloudforms'
+  debug:
+    var: cloudforms
+
 - name: 'Debug :: environment'
   debug:
     var: environment

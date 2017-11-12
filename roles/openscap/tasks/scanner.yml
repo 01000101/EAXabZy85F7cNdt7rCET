@@ -49,7 +49,7 @@
       action: add
       resources:
       - name: OpenSCAP Report
-        value: "{{ openscap_s3_path.url }}"
+        value: "https://s3.amazonaws.com/beltrix/zt-scans/openscap-{{ inventory_hostname }}.html"
         source: EVM
         section: Compliance
     force_basic_auth: yes

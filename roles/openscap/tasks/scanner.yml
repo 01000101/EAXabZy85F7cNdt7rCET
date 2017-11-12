@@ -1,0 +1,32 @@
+- name: Creating temporary file placeholder for scan results
+  tempfile:
+    state: file
+    prefix: 'openscap'
+    suffix: '.html'
+  register: openscap_remote_scan_path
+
+# Sample CentOS 7 PCI-DSS scan
+# openscap_xccdf_id: scap_org.open-scap_cref_ssg-rhel7-xccdf-1.2.xml
+# openscap_profile: xccdf_org.ssgproject.content_profile_pci-dss
+# openscap_ds_path: /usr/share/xml/scap/ssg/content/ssg-centos7-ds.xml
+- name: Running OpenSCAP scan
+  shell: |
+    oscap xccdf eval \
+      --report="{{ openscap_remote_scan_path }}" \
+      --fetch-remote-resources \
+      --xccdf-id="{{ openscap_xccdf_id }}" \
+      --profile="{{ openscap_profile }}"  \
+      {{ openscap_ds_path }}
+  ignore_errors: yes
+
+- name: Downloading OpenSCAP scan report
+  fetch:
+    src: {{ openscap_remote_scan_path }}
+    dest: /tmp/openscap-{{ inventory_hostname }}.html
+    flat: yes
+
+#- name: copy the paired files to the right servers
+#  hosts: dest-servers
+#  copy:
+#    src: "/tmp/{{ source-server }}/path/to/file"
+#    dest: /path/to/dest

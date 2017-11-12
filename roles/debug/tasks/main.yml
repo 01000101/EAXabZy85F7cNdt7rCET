@@ -1,0 +1,2 @@
+- name: Dumping variables
+  action: template src=debugger.j2 dest=/tmp/ansible-vars

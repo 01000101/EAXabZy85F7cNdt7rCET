@@ -26,9 +26,9 @@
     oscap xccdf eval \
       --report="{{ openscap_results.path }}" \
       --fetch-remote-resources \
-      --xccdf-id="{{ openscap_xccdf_id }}" \
+      --xccdf-id="{{ openscap_xccdf_id }}.xml" \
       --profile="{{ openscap_profile }}"  \
-      {{ openscap_guide.path }}/scap-security-guide-0.1.36-oval-5.10/{{ openscap_ds }}
+      {{ openscap_guide.path }}/scap-security-guide-0.1.36-oval-5.10/{{ openscap_ds }}.xml
   ignore_errors: yes
 
 - name: Downloading OpenSCAP scan report

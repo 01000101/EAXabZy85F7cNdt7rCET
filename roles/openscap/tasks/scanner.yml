@@ -41,8 +41,8 @@
   aws_s3:
     aws_access_key: "{{ aws_access_key }}"
     aws_secret_key: "{{ aws_secret_key }}"
-    bucket: beltrix
-    object: "zt-scans/openscap-{{ inventory_hostname }}.html"
+    bucket: openscap-joscor-live
+    object: "openscap-{{ inventory_hostname }}.html"
     src: "/tmp/openscap-{{ inventory_hostname }}.html"
     mode: put
     permission:
@@ -61,7 +61,7 @@
       action: add
       resources:
       - name: OpenSCAP Report
-        value: "https://s3.amazonaws.com/beltrix/zt-scans/openscap-{{ inventory_hostname }}.html"
+        value: "https://s3.amazonaws.com/openscap-joscor-live/openscap-{{ inventory_hostname }}.html"
         source: EVM
         section: Compliance
     force_basic_auth: yes

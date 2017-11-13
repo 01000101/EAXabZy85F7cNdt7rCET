@@ -48,11 +48,11 @@
     permission:
     - public-read
     metadata:
-      Content-Type: 'text/html'
-      Content-Disposition: 'text/html'
+      content-type: 'text/html'
+      content-disposition: 'text/html'
     headers:
-      Content-Type: 'text/html'
-      Content-Disposition: 'text/html'
+      content-type: 'text/html'
+      content-disposition: 'text/html'
   delegate_to: localhost
   register: openscap_s3_path
 

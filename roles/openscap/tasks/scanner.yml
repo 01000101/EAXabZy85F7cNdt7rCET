@@ -47,6 +47,7 @@
     mode: put
     permission:
     - public-read
+    metadata: 'Content-type=text/html,Content-Disposition=text/html'
   delegate_to: localhost
   register: openscap_s3_path
 
@@ -61,7 +62,7 @@
       action: add
       resources:
       - name: OpenSCAP Report
-        value: "https://s3.amazonaws.com/openscap-joscor-live/openscap-{{ inventory_hostname }}.html"
+        value: "http://openscap-joscor-live.s3-website-us-east-1.amazonaws.com/openscap-{{ inventory_hostname }}.html"
         source: EVM
         section: Compliance
     force_basic_auth: yes

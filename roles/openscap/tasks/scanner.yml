@@ -47,7 +47,9 @@
     mode: put
     permission:
     - public-read
-    metadata: 'Content-type=text/html,Content-Disposition=text/html'
+    headers:
+      Content-type: 'text/html'
+      Content-Disposition: 'text/html'
   delegate_to: localhost
   register: openscap_s3_path
 

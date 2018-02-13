@@ -37,60 +37,60 @@
     dest: "/tmp/openscap-{{ inventory_hostname }}.html"
     flat: yes
 
-- name: Uploading OpenSCAP scan to AWS S3
-  aws_s3:
-    aws_access_key: "{{ aws_access_key }}"
-    aws_secret_key: "{{ aws_secret_key }}"
-    bucket: openscap-joscor-live
-    object: "openscap-{{ inventory_hostname }}.html"
-    src: "/tmp/openscap-{{ inventory_hostname }}.html"
-    mode: put
-    permission:
-    - public-read
-    metadata:
-      content-type: 'text/html'
-      content-disposition: 'text/html'
-    headers:
-      content-type: 'text/html'
-      content-disposition: 'text/html'
-  delegate_to: localhost
-  register: openscap_s3_path
-
-- name: Update ManageIQ instance with OpenSCAP scan result URL
-  uri:
-    url: "{{ cloudforms.href }}/custom_attributes"
-    validate_certs: no
-    method: POST
-    user: "{{ cloudforms_api_username }}"
-    password: "{{ cloudforms_api_password }}"
-    body:
-      action: add
-      resources:
-      - name: OpenSCAP Report
-        value: "http://openscap-joscor-live.s3-website-us-east-1.amazonaws.com/openscap-{{ inventory_hostname }}.html"
-        source: EVM
-        section: Compliance
-    force_basic_auth: yes
-    status_code: 200
-    body_format: json
-  delegate_to: localhost
-
-- name: Update ManageIQ instance with OpenSCAP scan result timestamp
-  uri:
-    url: "{{ cloudforms.href }}/custom_attributes"
-    validate_certs: no
-    method: POST
-    user: "{{ cloudforms_api_username }}"
-    password: "{{ cloudforms_api_password }}"
-    body:
-      action: add
-      resources:
-      - name: OpenSCAP Report Timestamp
-        value: "{{ ansible_date_time.iso8601 }}"
-        source: EVM
-        section: Compliance
-    force_basic_auth: yes
-    status_code: 200
-    body_format: json
-  delegate_to: localhost
+#- name: Uploading OpenSCAP scan to AWS S3
+#  aws_s3:
+#    aws_access_key: "{{ aws_access_key }}"
+#    aws_secret_key: "{{ aws_secret_key }}"
+#    bucket: openscap-joscor-live
+#    object: "openscap-{{ inventory_hostname }}.html"
+#    src: "/tmp/openscap-{{ inventory_hostname }}.html"
+#    mode: put
+#    permission:
+#    - public-read
+#    metadata:
+#      content-type: 'text/html'
+#      content-disposition: 'text/html'
+#    headers:
+#      content-type: 'text/html'
+#      content-disposition: 'text/html'
+#  delegate_to: localhost
+#  register: openscap_s3_path
+#
+#- name: Update ManageIQ instance with OpenSCAP scan result URL
+#  uri:
+#    url: "{{ cloudforms.href }}/custom_attributes"
+#    validate_certs: no
+#    method: POST
+#    user: "{{ cloudforms_api_username }}"
+#    password: "{{ cloudforms_api_password }}"
+#    body:
+#      action: add
+#      resources:
+#      - name: OpenSCAP Report
+#        value: "http://openscap-joscor-live.s3-website-us-east-1.amazonaws.com/openscap-{{ inventory_hostname }}.html"
+#        source: EVM
+#        section: Compliance
+#    force_basic_auth: yes
+#    status_code: 200
+#    body_format: json
+#  delegate_to: localhost
+#
+#- name: Update ManageIQ instance with OpenSCAP scan result timestamp
+#  uri:
+#    url: "{{ cloudforms.href }}/custom_attributes"
+#    validate_certs: no
+#    method: POST
+#    user: "{{ cloudforms_api_username }}"
+#    password: "{{ cloudforms_api_password }}"
+#    body:
+#      action: add
+#      resources:
+#      - name: OpenSCAP Report Timestamp
+#        value: "{{ ansible_date_time.iso8601 }}"
+#        source: EVM
+#        section: Compliance
+#    force_basic_auth: yes
+#    status_code: 200
+#    body_format: json
+#  delegate_to: localhost
 
